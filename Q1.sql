@@ -38,12 +38,12 @@ ADD CONSTRAINT CK_FirstName_Letters
 CHECK (FirstName NOT LIKE '%[^a-zA-Z]%');
 
 --QD4: ADD FK CONSTRAINT(S) TO THE TABLE
-/*
-Instructions:
-- Must define action
-- At least one of the FKs must utilize the default value
-*/
-----Description: .....................
+----Description: Every employee must work in a department that exists. If a department
+----gets deleted, its employees are not removed, they are moved to the default
+----Management department (777) until they are reassigned. If a department's ID
+----changes, its employees' records follow it automatically.
+ALTER TABLE Employees
+ADD CONSTRAINT DF_Employees_DepartmentId DEFAULT 777 FOR DepartmentId;
 
 GO
 --QD5: Create TRIGGER ...
