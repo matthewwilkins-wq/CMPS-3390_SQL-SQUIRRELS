@@ -20,11 +20,12 @@ CREATE TABLE Employees (
     LastName VARCHAR(32) NOT NULL,
     SSN CHAR(9) NOT NULL,
     Position VARCHAR(64) NOT NULL,
-    HireDate DATE NOT NULL,
+    HireDate DATE NOT NULL DEFAULT GETDATE(),
     DepartmentId INT,
 
     PRIMARY KEY (EmployeeId)
 )
+
 
 --QD2: ALTER TABLE ...
 ----Description: Change Employees.LastName to have a maximum size of 64
