@@ -63,22 +63,49 @@ CHECK (FirstName NOT LIKE '%[^a-zA-Z]%');
 ALTER TABLE Employees
 ADD CONSTRAINT DF_Employees_DepartmentId DEFAULT 777 FOR DepartmentId;
 
-ALTER TABLE Employees
-ADD CONSTRAINT FK_Employees_Departments
-    FOREIGN KEY (DepartmentId) REFERENCES Departments (DepartmentId)
-    ON DELETE SET DEFAULT
-    ON UPDATE CASCADE;
-
+GO
 --QD5: Create TRIGGER ...
-----Description: .....................
-
+----Description: Prevent future hire dates
+CREATE TRIGGER trg_EmployeeHireDate
+ON dbo.Employees
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM inserted
+        WHERE HireDate > GETDATE()
+    )
+    BEGIN
+        ;THROW 50001, 'Hire date cannot be in the future.',1;
+    END
+END;
+GO
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DML QUERIES   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 --QM1.1: A TEST QUERY FOR THE TRIGGER CREATED in QD5:
-----Description: .....................
+----Description: Tests that employees cannot have future hire dates
+INSERT INTO Employees (
+    EmployeeId,
+    FirstName,
+    LastName,
+    SSN,
+    Position,
+    HireDate,
+    DepartmentId
+)
+VALUES (
+    'TEST001',
+    'Matthew',
+    'Wilkins',
+    '123456789',
+    'Sales Associate',
+    DATEADD(DAY, 1, GETDATE()),
+    NULL
+);
 
 
 --QM1.2: A TEST QUERY FOR THE "CHECK" CONSTRAINT DEFINED in QD3:
