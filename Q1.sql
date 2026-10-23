@@ -63,6 +63,12 @@ CHECK (FirstName NOT LIKE '%[^a-zA-Z]%');
 ALTER TABLE Employees
 ADD CONSTRAINT DF_Employees_DepartmentId DEFAULT 777 FOR DepartmentId;
 
+ALTER TABLE Employees
+ADD CONSTRAINT FK_Employees_Departments
+    FOREIGN KEY (DepartmentId) REFERENCES Departments (DepartmentId)
+    ON DELETE SET DEFAULT
+    ON UPDATE CASCADE;
+
 GO
 --QD5: Create TRIGGER ...
 ----Description: Prevent future hire dates
