@@ -112,7 +112,11 @@ VALUES (
 ----Description: HR accidentally types a number into a new cashier's first name
 ----("J0hn" with a zero). The CHECK constraint will reject the insert.
 INSERT INTO Employees (EmployeeId, FirstName, LastName, SSN, Position, DepartmentId)
-VALUES ('EMP11', 'J0hn', 'Smith', '123456789', 'Cashier', 666);
+VALUES ('EMP11', 'J0hn', 'Test', '123456789', 'Cashier', 666);
+
+----"John Test" is a will pass the constraint validation.
+INSERT INTO Employees (EmployeeId, FirstName, LastName, SSN, Position, DepartmentId)
+VALUES ('EMP11', 'John', 'Test', '123456789', 'Cashier', 666);
 
 --QM1.3: A TEST QUERY FOR THE FK CONSTRAINT DEFINED in QD4:
 ----Description: The store closes the Marketing department (111).
