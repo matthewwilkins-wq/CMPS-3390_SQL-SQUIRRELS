@@ -1,0 +1,82 @@
+/*
+TEAM NAME: SQL Squirrels
+TEAM MEMBERS' NAME: Ben Verbois, Matthew Wilkins, Noah Day
+
+
+Instructions
+- Descriptions must reflect a business operation's need
+- One query for each item (Q..) is enough. E.g.,�for�QD1: CREATE TABLE, write a DDL query to create one of your project's tables. Similar for the others.
+- You must use the exact format
+- Project a few attributes only unless otherwise said
+- Do not change the order of the queries
+*/
+
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DML QUERIES   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+--QM2: INSERT DATA:
+----Description: Create a new employee and assign them to a Department.
+INSERT INTO Employees 
+  (EmployeeId, FirstName, LastName, SSN, Position, HireDate, DepartmentId)
+VALUES 
+  ('EMP4', 'Merlina', 'Krysztofowicz', '333333333', 'Stock Clerk', '2/21/2021', 222);
+
+--QM3: UPDATE DATA:
+----Description: .....................
+
+
+--QM4: DELETE DATA:
+----Description: .....................
+
+
+
+--QM5: QUERY DATA WITH WHERE CLAUSE:
+----Description: Retrieve the employee with Id 'EMP4' and all employees
+----hired after 1/1/2020 that work in department 111.
+
+SELECT *
+FROM Employees
+WHERE (EmployeeId = 'EMP4') OR 
+      ( (DepartmentId = 111) AND
+        (HireDate > '1/1/2020') 
+      );
+
+
+--QM6.1: QUERY DATA WITH 'SUB-QUERY IN WHERE CLAUSE':
+----Description: .....................
+
+SELECT ....
+FROM ...
+WHERE ..... (SELECT .... FROM ..... WHERE .....)
+
+--QM6.2: QUERY DATA WITH SUB-QUERY IN FROM CLAUSE:
+----Description: Retrieve the FirstName and DepartmentId of all 
+----employees with a non-null DepartmentId equal to 111.
+
+SELECT EMPS.FirstName, EMPS.DepartmentId
+FROM (SELECT * FROM Employees WHERE DepartmentId IS NOT NULL) AS EMPS
+WHERE (EMPS.DepartmentId = 111);
+
+--QM6.3: QUERY DATA WITH 'SUB-QUERY IN SELECT CLAUSE':
+----Description: .....................
+
+SELECT .... (SELECT .... FROM ... TBI ... WHERE .... TBO.** = TBI.** ... )
+FROM ...TBO ...
+WHERE ......
+
+
+--QM7: QUERY DATA WITH EXCEPT:
+----Description: Retrieve the DepartmentId for all Departments which do not 
+----have any employees.
+SELECT DepartmentId FROM Departments
+EXCEPT
+SELECT DepartmentId FROM Employees
+
+--QM8.1: QUERY DATA WITH ANY/SOME:
+----Description: .....................
+
+
+--QM8.2: QUERY DATA WITH ALL in front of a sub-query:
+----Description: .....................
+
+
