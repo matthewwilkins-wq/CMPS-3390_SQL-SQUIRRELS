@@ -22,13 +22,24 @@ VALUES
   ('EMP4', 'Merlina', 'Krysztofowicz', '333333333', 'Stock Clerk', '2/21/2021', 222);
 
 --QM3: UPDATE DATA:
-----Description: .....................
+----Description: Update Employee 'EMP4' to change their position to 'Sales Associate'.
 
+SELECT *
+FROM Employees
+
+UPDATE Employees
+SET Position = 'Sales Associate'
+WHERE EmployeeId = 'EMP4';
 
 --QM4: DELETE DATA:
-----Description: .....................
+----Description: Delete the employee with Id 'EMP4' from the Employees table.
 
+DELETE FROM Employees
+WHERE EmployeeId = 'EMP4';
 
+SELECT *
+FROM Employees
+WHERE EmployeeId = 'EMP4';
 
 --QM5: QUERY DATA WITH WHERE CLAUSE:
 ----Description: Retrieve the employee with Id 'EMP4' and all employees
@@ -43,11 +54,17 @@ WHERE (EmployeeId = 'EMP4') OR
 
 
 --QM6.1: QUERY DATA WITH 'SUB-QUERY IN WHERE CLAUSE':
-----Description: .....................
+----Description: Retrieve EMP4 and employees in department 111 hired after 1/1/2020 using a subquery.
 
-SELECT ....
-FROM ...
-WHERE ..... (SELECT .... FROM ..... WHERE .....)
+SELECT *
+FROM Employees
+WHERE EmployeeId = 'EMP4'
+OR EmployeeId IN (
+    SELECT EmployeeId
+    FROM Employees
+    WHERE DepartmentId = 111
+    AND HireDate > '2020-01-01'
+);
 
 --QM6.2: QUERY DATA WITH SUB-QUERY IN FROM CLAUSE:
 ----Description: Retrieve the FirstName and DepartmentId of all 
