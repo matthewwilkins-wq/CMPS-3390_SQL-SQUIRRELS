@@ -75,11 +75,13 @@ FROM (SELECT * FROM Employees WHERE DepartmentId IS NOT NULL) AS EMPS
 WHERE (EMPS.DepartmentId = 111);
 
 --QM6.3: QUERY DATA WITH 'SUB-QUERY IN SELECT CLAUSE':
-----Description: .....................
+----Description: Retrieves the employees names and the department
+----they work in for employees hired since 2015.
 
-SELECT .... (SELECT .... FROM ... TBI ... WHERE .... TBO.** = TBI.** ... )
-FROM ...TBO ...
-WHERE ......
+SELECT E.FirstName, E.LastName, E.Position,
+       (SELECT D.DepartmentName FROM Departments D WHERE D.DepartmentId = E.DepartmentId) AS DepartmentName
+FROM Employees E
+WHERE E.HireDate >= '2015-01-01';
 
 
 --QM7: QUERY DATA WITH EXCEPT:
@@ -90,10 +92,18 @@ EXCEPT
 SELECT DepartmentId FROM Employees
 
 --QM8.1: QUERY DATA WITH ANY/SOME:
-----Description: .....................
+----Description: Retrieves a list of departments that currently
+----have staff in them, meaning at least one employee works in them.
+
+SELECT DepartmentId, DepartmentName
+FROM Departments
+WHERE DepartmentId = ANY (SELECT DepartmentId FROM Employees);
 
 
 --QM8.2: QUERY DATA WITH ALL in front of a sub-query:
-----Description: .....................
+----Description: Retrieves the longest working employee:
+----the one hired on or before every other employee.
 
-
+SELECT FirstName, LastName, Position, HireDate
+FROM Employees
+WHERE HireDate <= ALL (SELECT HireDate FROM Employees);
